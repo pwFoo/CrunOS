@@ -34,3 +34,9 @@ Same as above with replaced keyword...
 ```
 ./tools/linuxkit.sh -yml rustysd.yml
 ```
+
+# Run with qemu
+
+```
+./tools/qemu.sh 
+```
