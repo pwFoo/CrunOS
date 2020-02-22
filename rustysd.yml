@@ -41,6 +41,14 @@ services:
     - CAP_NET_RAW
     - CAP_SYS_ADMIN
 
+  - name: sshd
+    image: pwfoo/sshd:latest
+    net: host
+    pid: host
+    capabilities:
+    - all
+    binds:
+    - /:/host
 
   - name: docker
     image: docker:18.06.0-ce-dind

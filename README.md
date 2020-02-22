@@ -40,3 +40,21 @@ Same as above with replaced keyword...
 ```
 ./tools/qemu.sh 
 ```
+
+# Change to host namespace via ssh
+
+Login to the sshd container and execute the following command to enter host namespace and rootfs
+```
+nsenter -t 1  -F chroot /host /bin/sh
+```
+
+Now you're able to use hosts crun:
+```
+crun list
+```
+
+Because of privileged and net/pid namesace of host also a chroot would work
+```
+chroot /host /bin/sh
+crun list
+```
