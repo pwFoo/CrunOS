@@ -4,6 +4,7 @@ FROM	$BASE_IMAGE AS rootfs
 WORKDIR	/rootfs
 
 RUN	mkdir -p \
+	run/resolvconf \
 	etc/unitfiles \
 	lib/firmware \
 	lib/modules \
@@ -41,7 +42,15 @@ RUN	rm -rf \
 	var/cache \
 	var/lib/*
 
-RUN	touch etc/resolv.conf
+RUN	cp -a \
+	/etc/passwd \
+	/etc/group \
+	\
+	etc/
+
+RUN	echo "nameserver 8.8.8.8" > run/resolvconf/resolv.conf
+
+RUN	chroot /rootfs echo root:password | /usr/sbin/chpasswd 
 
 
 FROM	scratch

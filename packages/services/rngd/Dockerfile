@@ -37,3 +37,5 @@ RUN	make DESTDIR=$OUT install
 FROM    scratch
 
 COPY    --from=rngd /out/usr/sbin/rngd /usr/sbin/rngd
+
+CMD	["/usr/sbin/rngd", "-f", "-r", "/dev/urandom", "-p", "/var/run/rngd.pid"]

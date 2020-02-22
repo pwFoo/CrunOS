@@ -21,7 +21,7 @@ services:
      - all
     binds:
      - /lib/modules:/lib/modules
-    command: [ "/usr/sbin/rngd", "-f", "-r", "/dev/urandom", "-p", "/var/run/rngd.pid" ]
+#    command: [ "/usr/sbin/rngd", "-f", "-r", "/dev/urandom", "-p", "/var/run/rngd.pid" ]
 
   - name: mdevd
     image: pwfoo/os-mdevd:latest
@@ -31,15 +31,24 @@ services:
     - /lib/modules:/lib/modules
     - /lib/firmware:/lib/firmware
 
+  - name: udhcpc
+    image: pwfoo/udhcpc:latest
+    net: host
+    binds:
+    - /etc/resolv.conf:/etc/resolv.conf    
+    capabilities:
+    - CAP_NET_ADMIN
+    - CAP_NET_RAW
+    - CAP_SYS_ADMIN
+
+
   - name: docker
     image: docker:18.06.0-ce-dind
     capabilities:
      - all
     net: host
-    mounts:
-     - type: cgroup
-       options: ["rw","nosuid","noexec","nodev","relatime"]
     binds:
+     - /run/docker/cgroup:/sys/fs/cgroup
      - /etc/resolv.conf:/etc/resolv.conf
      - /var/lib/docker:/var/lib/docker
      - /lib/modules:/lib/modules
@@ -60,6 +69,8 @@ services:
 #     - /lib/modules:/lib/modules
 
 files:
+#  - path: /var/lib/containers
+#    directory: true
   - path: var/lib/docker
     directory: true
   - path: etc/docker/daemon.json

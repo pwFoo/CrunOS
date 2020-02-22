@@ -70,13 +70,15 @@ COPY 	--from=systemd /out/* /usr/lib64/
 COPY 	--from=yajl /out/* /usr/lib64/
 COPY 	--from=seccomp /out/* /usr/lib64/
 
-RUN	git clone https://github.com/containers/crun.git /crun
+ARG	BRANCH=master
+ARG	REPO=https://github.com/containers/crun.git
+RUN	git clone $REPO --branch $BRANCH /crun
 
 WORKDIR	/crun
 
 ARG	COMMIT=$COMMIT
 #RUN	[ -z "$COMMIT" ] || git checkout $COMMIT
-RUN	[ -z "$COMMIT" ] || git fetch https://github.com/containers/crun.git $COMMIT
+RUN	[ -z "$COMMIT" ] || git fetch $REPO $COMMIT
 
 RUN	./autogen.sh
 
