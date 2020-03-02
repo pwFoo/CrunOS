@@ -25,9 +25,18 @@ RUN	ln -s ../run var/run
 RUN     ln -s /var/lib/apk var/lib/apk
 RUN     ln -s /etc/apk etc/apk
 
+### alpine busybox
+#RUN	apk --update --no-cache --root /rootfs --initdb add \
+#	busybox 
+
+# alpine static busybox
 RUN	apk --update --no-cache --root /rootfs --initdb add \
-	busybox 
-	
+	busybox-static
+RUN	mv /rootfs/bin/busybox.static /rootfs/bin/busybox
+#RUN	mkdir -p usr
+#RUN	ln -s bin usr/sbin
+RUN	ln -s bin sbin
+
 
 RUN	rm -rf \
 	var/lib/apk \
@@ -42,15 +51,21 @@ RUN	rm -rf \
 	var/cache \
 	var/lib/*
 
-RUN	cp -a \
-	/etc/passwd \
-	/etc/group \
-	\
-	etc/
+RUN     ln -s bin/busybox init
 
+RUN	chroot /rootfs /bin/busybox --install -s /bin
+
+#RUN	cp -a \
+#	/etc/passwd \
+#	/etc/group \
+#	\
+#	etc/
+#
 RUN	echo "nameserver 8.8.8.8" > run/resolvconf/resolv.conf
+#
+#RUN	chroot /rootfs echo root:password | /usr/sbin/chpasswd 
 
-RUN	chroot /rootfs echo root:password | /usr/sbin/chpasswd 
+COPY	files/ /rootfs/
 
 
 FROM	scratch

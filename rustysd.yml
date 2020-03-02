@@ -5,7 +5,9 @@ kernel:
 init:
   - pwfoo/init-rootfs:latest
   # default packages from kernel.tar missing?!
+#  - pwfoo/init-busybox:latest
   - pwfoo/os-alpine-modules:latest
+  - pwfoo/init-ca-certificates:latest
   - pwfoo/init-crun:latest
 #  - alpine:latest      # for testing / debugging if apk is needed...
   - pwfoo/init-rustysd:latest
