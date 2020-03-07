@@ -14,7 +14,7 @@
 ::sysinit:/bin/mount -t cgroup2 none /sys/fs/cgroup/
 ::sysinit:/bin/grep -h MODALIAS /sys/bus/*/devices/*/uevent | /bin/cut -d= -f2 | /bin/xargs /bin/modprobe -abq 2> /dev/null
 ::sysinit:/bin/grep -h MODALIAS /sys/bus/*/devices/*/uevent | /bin/cut -d= -f2 | /bin/xargs /bin/modprobe -abq 2> /dev/null
-::sysinit:/bin/modprobe -a ext4 overlay
+#::sysinit:/bin/modprobe -a ext4 overlay
 
 # prepare linuxkit containers...
 ::sysinit:/prepare.sh
@@ -22,7 +22,7 @@
 
 
 # finally start rustysd
-::respawn:/usr/sbin/rustysd
+::respawn:/bin/rustysd
 
 # Start an "askfirst" shell on the console (whatever that may be)
 ::askfirst:-/bin/sh

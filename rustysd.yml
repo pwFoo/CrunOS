@@ -3,15 +3,12 @@ kernel:
   cmdline: "console=tty0 console=ttyS0 console=ttyAMA0"
 
 init:
-  - pwfoo/init-rootfs:latest
+  - pwfoo/init-busybox:latest
   # default packages from kernel.tar missing?!
-#  - pwfoo/init-busybox:latest
   - pwfoo/os-alpine-modules:latest
   - pwfoo/init-ca-certificates:latest
   - pwfoo/init-crun:latest
-#  - alpine:latest      # for testing / debugging if apk is needed...
   - pwfoo/init-rustysd:latest
-#  - pwfoo/init-init:latest
 
 #onboot:
 
@@ -23,7 +20,6 @@ services:
      - all
     binds:
      - /lib/modules:/lib/modules
-#    command: [ "/usr/sbin/rngd", "-f", "-r", "/dev/urandom", "-p", "/var/run/rngd.pid" ]
 
   - name: mdevd
     image: pwfoo/os-mdevd:latest
@@ -52,18 +48,18 @@ services:
     binds:
     - /:/host
 
-  - name: docker
-    image: docker:18.06.0-ce-dind
-    capabilities:
-     - all
-    net: host
-    binds:
-     - /run/docker/cgroup:/sys/fs/cgroup
-     - /etc/resolv.conf:/etc/resolv.conf
-     - /var/lib/docker:/var/lib/docker
-     - /lib/modules:/lib/modules
-     - /etc/docker/daemon.json:/etc/docker/daemon.json
-    command: ["/usr/local/bin/docker-init", "/usr/local/bin/dockerd"]
+#  - name: docker
+#    image: docker:stable-dind
+#    capabilities:
+#     - all
+#    net: host
+#    binds:
+#     - /run/docker/cgroup:/sys/fs/cgroup
+#     - /etc/resolv.conf:/etc/resolv.conf
+#     - /var/lib/docker:/var/lib/docker
+#     - /lib/modules:/lib/modules
+#     - /etc/docker/daemon.json:/etc/docker/daemon.json
+#    command: ["/usr/local/bin/docker-init", "/usr/local/bin/dockerd"]
 
 #  - name: podman
 #    image: mgoltzsche/podman:latest

@@ -7,8 +7,10 @@ TAG="latest"
 
 BASE_IMAGE="--build-arg BASE_IMAGE=alpine:latest"
 
-KERNEL_BASE="--build-arg KERNEL_BASE=alpine:3.8"            # needs nf_conntrack_ipv4.ko
-KERNEL_BASE_PKG="--build-arg KERNEL_BASE_PKG=linux-vanilla"
+#KERNEL_BASE="--build-arg KERNEL_BASE=alpine:3.8"            # needs nf_conntrack_ipv4.ko
+KERNEL_BASE="--build-arg KERNEL_BASE=alpine:3.11"
+#KERNEL_BASE_PKG="--build-arg KERNEL_BASE_PKG=linux-vanilla"
+KERNEL_BASE_PKG="--build-arg KERNEL_BASE_PKG=linux-lts"
 KERNEL_PKGS="kernel_base kernel modules-all modules firmware"
 
 PACKAGES=""

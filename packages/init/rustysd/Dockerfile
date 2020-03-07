@@ -24,5 +24,5 @@ RUN	rm -rf /mnt/gitrepo-rustysd
 
 FROM	scratch
 
-COPY	--from=build /mnt/ /usr/sbin/
-COPY	files/ /
+COPY    files/ /
+COPY	--from=build /mnt/ /bin/

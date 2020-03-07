@@ -91,4 +91,4 @@ RUN	strip crun
 
 FROM	scratch
 
-COPY	--from=crun /crun/crun /usr/bin/crun
+COPY	--from=crun /crun/crun /bin/crun
