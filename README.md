@@ -4,8 +4,6 @@ A fun linux system based on containers and linuxkit tool :)
 
 # Build kernel / modules / firmware images
 
-default: Alpine 3.8 vanilla, because of missing `nf_conntrack` module with kernels >=4.19
-
 ```
 ./tools/build.sh kernel alpine -r <DOCKER_REPO> 
 ```
